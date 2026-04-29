@@ -1,5 +1,7 @@
 package com.jacob.workout.user;
 
+import com.jacob.workout.session.SessionLedger;
+
 public class User {
     private String firstName;
     private String lastName;
@@ -7,9 +9,13 @@ public class User {
     private double weight;
     private int heightInch; // Keeping height in inches
 
+    private SessionLedger ledger;
+
     // Statistic Variables
     private int totalWorkouts;
     private long totalVolume;
+
+    private boolean inWorkout;
 
     public User(String first, String last, int age, double weight, int height) {
         this.firstName = first;
@@ -19,6 +25,16 @@ public class User {
         setHeightInch(height);
         this.totalVolume = 0;
         this.totalWorkouts = 0;
+        this.inWorkout = false;
+        this.ledger = new SessionLedger();
+    }
+
+    public boolean isInWorkout() {
+        return this.inWorkout;
+    }
+
+    public void toggleWorkout() {
+        this.inWorkout = !this.inWorkout;
     }
 
     public String getFirstName() {
@@ -94,5 +110,13 @@ public class User {
             throw new IllegalArgumentException("totalVolume can't be less than zero.");
         }
         this.totalVolume = totalVolume;
+    }
+
+    public SessionLedger getLedger() {
+        return ledger;
+    }
+
+    public void setLedger(SessionLedger ledger) {
+        this.ledger = ledger;
     }
 }

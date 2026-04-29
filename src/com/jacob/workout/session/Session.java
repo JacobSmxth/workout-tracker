@@ -1,6 +1,7 @@
 package com.jacob.workout.session;
 
 import com.jacob.workout.exercise.*;
+import com.jacob.workout.set.Set;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -13,12 +14,12 @@ public class Session {
 
     private LocalDateTime startedAt;
     private LocalDateTime endedAt;
-    private long DurationInSeconds;
+    private long durationInSeconds;
 
     public Session() {
         this.exercises = new ArrayList<>();
         this.startedAt = LocalDateTime.now();
-        this.DurationInSeconds = 0;
+        this.durationInSeconds = 0;
         this.endedAt = null;
     }
 
@@ -34,6 +35,33 @@ public class Session {
     public void completeSession() {
         this.endedAt = LocalDateTime.now();
         setDurationInSeconds(calculateDuration(this.startedAt, this.endedAt));
+
+        System.out.println("Exercises:");
+        for (Exercise e : this.exercises) {
+            System.out.println("");
+            System.out.println(e.getName());
+            int count = 0;
+            for (Set s : e.getSets()) {
+                count++;
+                System.out.println(
+                        "Set "
+                                + count
+                                + ": "
+                                + s.getReps()
+                                + "@"
+                                + s.getWeight()
+                                + "lbs ("
+                                + s.getRPE()
+                                + ").");
+            }
+            System.out.println("Total Volume: " + e.getTotalVolume());
+            System.out.println("Total Reps: " + e.getTotalReps());
+            System.out.println("Average RPE: " + String.format("%.2f", e.getAvgRPE()));
+        }
+
+        System.out.println("");
+        System.out.println(this.durationInSeconds + " seconds long workout");
+        System.out.println("GREAT WORKOUT!");
     }
 
     public void addExercise(Exercise e) {
@@ -71,13 +99,13 @@ public class Session {
     }
 
     public long getDurationInSeconds() {
-        return DurationInSeconds;
+        return durationInSeconds;
     }
 
     public void setDurationInSeconds(long durationInSeconds) {
-        if (DurationInSeconds < 0) {
+        if (durationInSeconds < 0) {
             throw new IllegalArgumentException("Duration can't be below zero.");
         }
-        this.DurationInSeconds = durationInSeconds;
+        this.durationInSeconds = durationInSeconds;
     }
 }

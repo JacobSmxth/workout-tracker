@@ -38,6 +38,7 @@ public class Exercise {
         this.avgRPE /= currentLen + 1; // Get new average
         this.sets.add(newSet);
         this.totalVolume += newSet.getWeight();
+        this.totalReps += newSet.getReps();
     }
 
     public void setSets(List<Set> sets) {
