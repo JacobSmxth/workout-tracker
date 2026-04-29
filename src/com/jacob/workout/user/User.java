@@ -1,8 +1,13 @@
 package com.jacob.workout.user;
 
+import java.util.List;
+import java.util.UUID;
+
+import com.jacob.workout.session.Session;
 import com.jacob.workout.session.SessionLedger;
 
 public class User {
+    private UUID id;
     private String firstName;
     private String lastName;
     private int age;
@@ -18,6 +23,7 @@ public class User {
     private boolean inWorkout;
 
     public User(String first, String last, int age, double weight, int height) {
+        this.id = UUID.randomUUID();
         this.firstName = first;
         this.lastName = last;
         setAge(age);
@@ -27,6 +33,10 @@ public class User {
         this.totalWorkouts = 0;
         this.inWorkout = false;
         this.ledger = new SessionLedger();
+    }
+
+    public UUID getId() {
+        return this.id;
     }
 
     public boolean isInWorkout() {
@@ -113,7 +123,15 @@ public class User {
     }
 
     public SessionLedger getLedger() {
-        return ledger;
+        return this.ledger;
+    }
+
+    public List<Session> getLedgerList() {
+        return this.ledger.getSessions();
+    }
+
+    public int getLedgerSize() {
+        return this.ledger.getSessions().size();
     }
 
     public void setLedger(SessionLedger ledger) {

@@ -12,7 +12,7 @@ public class Main {
 
         User newUser = new User("Jacob", "Smith", 20, 214.0, 74);
         service.addUser(newUser);
-        Session s = service.startUserSession(0);
+        Session s = service.startUserSession(newUser.getId());
         System.out.println("Session started!");
         Exercise e = new Exercise("Bench");
         s.addExercise(e);
@@ -22,6 +22,6 @@ public class Main {
         e.addSet(s1);
         e.addSet(s2);
         e.addSet(s3);
-        s.completeSession();
+        service.endUserSession(newUser.getId());
     }
 }
